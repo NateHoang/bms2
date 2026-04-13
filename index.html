@@ -1,0 +1,760 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Pharm Table</title>
+    <meta http-equiv="Content-type" content="text/html;charset=UTF-8" />
+
+    <style>
+      body {
+        font-family:
+          -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu",
+          "Droid Sans", sans-serif, "Meiryo";
+        padding: 0 12px;
+      }
+
+      table {
+        border-collapse: collapse;
+        margin-bottom: 24px;
+        width: 100%;
+      }
+      table > thead > tr > th,
+      table > tbody > tr > td {
+        padding: 5px 10px;
+      }
+      table > thead > tr > th {
+        text-align: left;
+        border-bottom: 1px solid;
+      }
+      table > tbody > tr + tr > td {
+        border-top: 1px solid;
+      }
+
+      .tooltip {
+        position: relative;
+        cursor: pointer;
+        display: inline-block;
+      }
+      .tooltip img {
+        display: none;
+        position: absolute;
+        width: var(--tooltip-img-width, 300px);
+        height: auto;
+        border: 2px solid #f00;
+        background: #ffffcc;
+        padding: 5px;
+        z-index: 10;
+        bottom: 100%;
+        left: 50%;
+        transform: translateX(10px);
+        max-width: 90vw; /* ✅ prevents image from exceeding viewport width */
+        max-height: 80vh; /* ✅ keeps image inside visible page vertically */
+        object-fit: contain;
+        box-sizing: border-box;
+      }
+
+      .tooltip[data-position="below"] img {
+        bottom: auto;
+        top: 100%;
+      }
+
+      .tooltip:hover img {
+        display: block;
+        /* Reposition if too close to top or bottom of viewport */
+        top: auto;
+        bottom: auto;
+      }
+
+      .blurred {
+        filter: blur(3px);
+        transition: filter 0.3s ease;
+      }
+
+      table td:not(:first-child),
+      table td li {
+        cursor: pointer;
+      }
+
+      summary {
+        font-size: 22px;
+        font-weight: bold;
+        cursor: pointer;
+        margin: 16px 0;
+      }
+
+      details {
+        border: 2px solid #444;
+        border-radius: 8px;
+        padding: 10px;
+        background: #f9f9f9;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Protected Content</h2>
+    <p>Please enter the password to view the content:</p>
+    <input type="password" id="password" placeholder="Enter password" />
+    <button onclick="checkPassword()">Submit</button>
+    <div id="content" style="display: none; margin-top: 20px">
+      <!-- <div> -->
+      <div class="blur-buttons">
+        <button id="blurAll">Blur All (Press spacebar to blur)</button>
+        <button id="unblurAll">Unblur All (Press spacebar to unblue)</button>
+        <button
+          id="shuffleAllTables"
+          title="Shuffle each table's rows within its own details block"
+        >
+          Shuffle Tables (Press z to shuffle)
+        </button>
+        <button
+          id="resetTables"
+          title="Reset all tables to their original order"
+        >
+          Reset Tables (Press X to unshuffle)
+        </button>
+      </div>
+      <br />
+      <details>
+        <summary>Lecture 1: Virology</summary>
+
+        <table>
+          <thead>
+            <tr>
+              <th style="text-align: left">Specific Virus</th>
+              <th style="text-align: left">Family / Group</th>
+              <th style="text-align: left">Genome Type &amp; Polarity</th>
+              <th style="text-align: left">Transmission</th>
+              <th style="text-align: left">Clinical Effects &amp; Key Notes</th>
+              <th style="text-align: left">Treatment</th>
+              <th style="text-align: left">Diagnosis</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="text-align: left"><strong>Adenovirus</strong></td>
+              <td style="text-align: left">Adeno</td>
+              <td style="text-align: left">
+                <strong>dsDNA</strong> (Non-enveloped)
+              </td>
+              <td style="text-align: left">
+                <ul>
+                  <li>Aerosol droplets</li>
+                  <li>Fecal-oral</li>
+                  <li>Contact with contaminated surfaces</li>
+                </ul>
+              </td>
+              <td style="text-align: left">
+                <ul>
+                  <li>
+                    Respiratory (cough, nasal congestion, fever, sore throat,
+                    <b>pneumonia</b>)
+                  </li>
+                  <li>
+                    <b> Ocular (conjunctivitis) </b>
+                  </li>
+                  <li>GI (gastroenteritis, diarrhea)</li>
+                  <li>Infections</li>
+                </ul>
+              </td>
+              <td style="text-align: left">Supportive treatment</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td style="text-align: left">
+                <strong>
+                  <li>Hepatitis A (HAV)</li>
+                  <li>Hepatitis E (HEV)</li>
+                </strong>
+              </td>
+              <td style="text-align: left">Picorna</td>
+              <td style="text-align: left">
+                <strong>(+) ssRNA</strong> (Non-enveloped)
+              </td>
+              <td>Fecal-oral route</td>
+              <td style="text-align: left">
+                <strong>Both</strong>
+                <ul>
+                  <li>Fever</li>
+                  <li>Fatigue</li>
+                  <li>Vomiting</li>
+                  <li><strong> Jaundice </strong></li>
+                  <li>Abdominal pain</li>
+                </ul>
+                <strong>HEV</strong>
+                <ul>
+                  <li>
+                    Associated with 30% mortality in 3rd trimester due to
+                    <strong>fulminant hepatitis</strong>
+                  </li>
+                  <li>↑Intrauterine death</li>
+                  <li>↑Preterm labor</li>
+                  <li>↑Vertical transmission</li>
+                </ul>
+              </td>
+              <td>
+                <li>Self Limiting</li>
+                <li>Supportive Management</li>
+              </td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td style="text-align: left">
+                <strong>Hepatitis B (HBV)</strong>
+              </td>
+              <td style="text-align: left">Hepadna</td>
+              <td style="text-align: left">
+                <strong>dsDNA</strong> (Enveloped)
+              </td>
+              <td style="text-align: left">
+                <ul>
+                  <li>Intimate physical contact with infected patient</li>
+                  <li>Contaminated blood</li>
+                  <li>Birth</li>
+                  <li>Can survive outside the body for few days</li>
+                </ul>
+              </td>
+              <td style="text-align: left">
+                <ul>
+                  <li>
+                    Acute and <strong>chronic liver disease</strong> (cirrhosis,
+                    liver cancer)
+                  </li>
+                </ul>
+                <strong> Life cycle </strong>
+                <ul>
+                  <li>
+                    Viral DNA → cccDNA (covalently closed circular DNA) → mRNA
+                    with host transcriptase
+                  </li>
+                  <li>Capable of chronic infection</li>
+                  <li>
+                    cccDNA causes poor response to treatment due to stability
+                  </li>
+                  <li>Can integrate host genome</li>
+                  <li>
+                    HBV DNA polymerase has reverse transcriptase activity that
+                    can synthesize a new DNA strand from the RNA template
+                    (unique, DNA virus replicate from mRNA template)
+                  </li>
+                </ul>
+              </td>
+              <td style="text-align: left">
+                Vaccine available
+                <strong>Infants and Children</strong>
+                <ul>
+                  <li>2nd dosage 1 month after 1st dosage</li>
+                  <li>3rd dosage 6 months after 1st dosage</li>
+                </ul>
+                <strong>Adults</strong>
+                <ul>
+                  <li>2 doses, 1 month apart</li>
+                </ul>
+                <li>Supportive or interferon</li>
+                <li>Other antivirals to decrease viral replication</li>
+                <li><strong>No definitive cure</strong></li>
+              </td>
+              <td>
+                <strong> Direct detection of viral DNA (viral load) </strong>
+                <strong>Antigens</strong>
+                <ul>
+                  <li>Hepatitis B surface antigen (HBsAg)</li>
+                  <li>Hepatitis B envelope antigen (HBeAg)</li>
+                </ul>
+                <strong>Antibodies</strong>
+                <ul>
+                  <li>Anti-hepatitis B surface antigen (Anti-HBsAg)</li>
+                  <li>Anti-hepatitis B envelope antigen (Anti-HBeAg)</li>
+                  <li>Anti-hepatitis B core antigen (Anti-HBcAg)</li>
+                </ul>
+                <strong>↑ALT/AST Levels</strong>
+              </td>
+            </tr>
+            <tr>
+              <td style="text-align: left">
+                <strong>Hepatitis C (HCV)</strong>
+              </td>
+              <td style="text-align: left">Flavi</td>
+              <td style="text-align: left">
+                <strong>(+) ssRNA</strong> (Enveloped)
+              </td>
+              <td>
+                <li>Contaminated Blood</li>
+                <li>Sexual</li>
+              </td>
+              <td style="text-align: left">
+                <li>
+                  Hepatotrophic causing acute or (>50%) chronic liver
+                  infection→Cirrhosis→Hepatocellular carcinoma
+                </li>
+              </td>
+              <td>
+                <li>
+                  HCV direct-acting antiviral agents (DAAs) against viral
+                  structural and non-structural proteins (NS3/NS4A protease
+                  inhibitors)
+                </li>
+                <li>Peginterferon and Ribavirin combination</li>
+                <li>
+                  Ribavirin effective against broad RNA and DNA viruses (can be
+                  used in with DAAs)
+                </li>
+              </td>
+              <td>
+                <li>
+                  Serological exams to determine viral antibodies (7-31 weeks of
+                  infection) or antigen (1-3 weeks post exposure)
+                </li>
+                <li>PCR to detect viral RNA for confirmation</li>
+              </td>
+            </tr>
+            <tr>
+              <td style="text-align: left">
+                <strong>Hepatitis D (HDV)</strong>
+              </td>
+              <td style="text-align: left">Satellite</td>
+              <td style="text-align: left">
+                <strong>(-) ssRNA</strong> (Enveloped)
+              </td>
+              <td>
+                <ul>
+                  <li>Sexual</li>
+                  <li>Blood</li>
+                </ul>
+              </td>
+              <td style="text-align: left">
+                <li>Severe liver disease</li>
+                <li>
+                  <strong>Defective virus</strong>—only causes infection if
+                  Hepatitis B (HBsAg) is present. (Superinfection)(Up to 40%
+                  fulfminant hepatitis)
+                </li>
+              </td>
+              <td>Prevent HBV</td>
+              <td>
+                <li>Hep. D RNA</li>
+                <li>Delta antigen</li>
+                <li>Anti-hepatitis D antibodies</li>
+              </td>
+            </tr>
+            <tr>
+              <td style="text-align: left">
+                <strong>Respiratory Syncytial Virus (RSV)</strong>
+              </td>
+              <td style="text-align: left">Paramyxo</td>
+              <td style="text-align: left">
+                <strong>(-) ssRNA</strong> (Enveloped)
+              </td>
+              <td>
+                <li>Respiratory Droplets</li>
+                <li>Direct contact</li>
+              </td>
+              <td style="text-align: left">
+                <strong>Symptoms</strong>
+                <ul>
+                  <li>Fever</li>
+                  <li>Coughing</li>
+                  <li>Rhinitis</li>
+                  <li>Pharyngitis</li>
+                </ul>
+                <li>Severe in infants and immunocompromised people</li>
+                <li>
+                  Recurrent due to viral mutations
+                  <strong>(antigenic drift)</strong>
+                </li>
+                <li>Replicate in nasopharynx</li>
+              </td>
+              <td>-</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td style="text-align: left"><strong>HIV (1 &amp; 2)</strong></td>
+              <td style="text-align: left">Retro</td>
+              <td style="text-align: left">
+                <strong>(+) ssRNA</strong> (Enveloped)
+              </td>
+              <td>
+                <li>Sexual Contact</li>
+                <li>Blood</li>
+                <li>Vertical</li>
+              </td>
+              <td style="text-align: left">
+                <strong>Clinical Manifestations</strong>
+                <ul>
+                  <li>Acute or Chronic HIV infection</li>
+                  <li>Depletion of <strong>CD4+ T cells</strong></li>
+                  <li>Leads to AIDS</li>
+                  <li>
+                    Uses <strong>Reverse Transcriptase</strong> to integrate
+                    into host genome.
+                  </li>
+                  <li>Fatal due to opportunistic infection</li>
+                </ul>
+                <strong>Mechanism</strong>
+                <ul>
+                  <li>Long incubation process</li>
+                  <li>
+                    <strong> Binding: </strong>
+                    interaction with glycoprotein
+                    <strong>gp120</strong> and <strong>gp41</strong> with host
+                    cell CD4 surface receptors to mark initiation of infection
+                  </li>
+                  <li>
+                    <strong> Fusion: </strong>
+                    Glycoprotein binds to chemokine receptors
+                    <strong>CCR5(M-tropic)</strong> or
+                    <strong>CXCR4 (T-tropic)</strong>. Inititate membrane fusion
+                    and viral entry
+                  </li>
+                  <li>
+                    <strong>Reverse Transcription: </strong> Viral RNA is
+                    convereted to DNA by
+                    <strong>reverse transcriptase enzyme</strong>
+                  </li>
+                  <li>
+                    <strong>Integration: </strong
+                    ><strong>retroviral interrase enzyme</strong> allows
+                    integration of viral DNA into host DNA
+                  </li>
+                  <li>
+                    <strong>Replication: </strong> Viral DNA replicated using
+                    host cell machinery to yield viral RNA and proteins
+                  </li>
+                  <li>
+                    <strong>Assembly: </strong> Viral genetic material and
+                    capsid protein are assembled near membrane.
+                    <strong>Aspartate Protease </strong> leads cleavage of viral
+                    polyproteins and finally assembly of an infectious viral
+                    particle
+                  </li>
+                  <li>
+                    <strong>Budding: </strong>Release of new viral molecules
+                    outside the cells
+                  </li>
+                </ul>
+                <strong>Disease Course</strong>
+                <ul>
+                  <li>
+                    <strong
+                      >Acute infection (Stage 1 or acute retroviral syndrome):
+                    </strong>
+                    <ul>
+                      <li>Within days after infection</li>
+                      <li>Last for few weeks</li>
+                      <li>↑Virus titer</li>
+                      <li>
+                        Flu-like symptoms (fever, fatigue, soar throat, night
+                        sweats) or GI symptoms
+                      </li>
+                    </ul>
+                  </li>
+                  <li>
+                    <strong>Chronic HIV infection (Stage 2):</strong>
+                  </li>
+                  <ul>
+                    <li>Mostly asymptomatic, but can transfer disease</li>
+                    <li>Latent stage that can last for decades</li>
+                    <li>↓T-cell</li>
+                    <li>↑Viral load</li>
+                    <li>AIDS develop in this phase</li>
+                    <li>
+                      Fevers, fatigue, weight loss,
+                      <strong>persistent lymphadenopathy</strong>
+                    </li>
+                  </ul>
+                  <li><strong>AIDS Stage (stage 3)</strong></li>
+                  <ul>
+                    <li>CD4&lt;200/ul</li>
+                    <li>
+                      Infected T cells killed by cytotoxic cells and natural
+                      killer cells
+                    </li>
+                    <li>High viral load</li>
+                    <li>
+                      Generalized lymphadenopathy, fever, weight loss, chronic
+                      diarrhea
+                    </li>
+                    <li>
+                      Patient suffers from multiple opportunistic infection
+                      (fungal, bacterial, viral infections) and cancer
+                    </li>
+                  </ul>
+                </ul>
+              </td>
+              <td>
+                Highly active Anti-retroviral therapy (HAART) lifelong
+                <ul>
+                  <li>Viral load</li>
+                  <li>HIV Strain</li>
+                  <li>CD4 cell count</li>
+                  <li>Patient condition and other disease symptoms</li>
+                </ul>
+                No vaccine
+              </td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td style="text-align: left">
+                <strong>Oncogenic Viruses</strong>
+              </td>
+              <td style="text-align: left">Various</td>
+              <td style="text-align: left"><strong>DNA or RNA</strong></td>
+              <td>-</td>
+              <td style="text-align: left">
+                Causes <strong>malignant transformation</strong> (cancer);
+                <ul>
+                  <li>
+                    Human papillomavirus (16 &amp; 18) (HPV) (Cervical or
+                    oropharyngeal)
+                  </li>
+                </ul>
+                <li>EBV (Burkitt)</li>
+                <li>HBV/HCV (Liver)</li>
+                <li>Kaposi sarcoma-associated herpevirus(KSHV)</li>
+                <li>Human T cell lymphotropic virus type-1 (HTLV-1)</li>
+                <li>Human immunodeficiency virus (HIV)</li>
+              </td>
+              <td>-</td>
+              <td>-</td>
+            </tr>
+          </tbody>
+        </table>
+      </details>
+    </div>
+    <style>
+      /* same as before */
+      .blurred {
+        filter: blur(10px);
+        transition: filter 0.3s ease;
+      }
+
+      /* Make clickable cursor for td */
+      table td:not(:first-child) {
+        cursor: pointer;
+      }
+
+      /* li inside blurred td will inherit blur from parent */
+      table td.blurred li {
+        filter: inherit;
+      }
+
+      .blur-buttons {
+        text-align: center;
+        margin-bottom: 16px;
+      }
+      .blur-buttons button {
+        margin: 0 5px;
+        padding: 5px 12px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+      .blur-section li {
+        cursor: pointer;
+        margin-bottom: 6px;
+      }
+
+      /* Blur effect same as td */
+      .blur-section li.blurred {
+        filter: blur(10px);
+        transition: filter 0.3s ease;
+      }
+
+      /* Override for bold text so it always stays clear */
+      .blur-section li.blurred b {
+        filter: none !important;
+      }
+
+      .blur-section .blur-target {
+        cursor: pointer;
+        display: inline-block;
+      }
+
+      .blurred {
+        filter: blur(10px);
+        transition: filter 0.3s ease;
+      }
+    </style>
+    <script>
+      // === BLUR LOGIC (delegated for reliability after resets) ===
+      document.addEventListener("DOMContentLoaded", () => {
+        // Delegated click: blur targets
+        document.addEventListener("click", (e) => {
+          const target = e.target;
+          // Blur targets: any table td except first-child, or elements with class 'blur-target'
+          const blurTarget =
+            target.closest("td:not(:first-child)") ||
+            target.closest(".blur-target");
+          if (blurTarget) {
+            blurTarget.classList.toggle("blurred");
+          }
+        });
+
+        // Space toggles all blurables
+        document.addEventListener("keydown", (event) => {
+          if (event.code === "Space") {
+            const blurCells = document.querySelectorAll(
+              "table td:not(:first-child), .blur-section .blur-target",
+            );
+            const allBlurred = Array.from(blurCells).every((cell) =>
+              cell.classList.contains("blurred"),
+            );
+            blurCells.forEach((cell) => {
+              if (allBlurred) cell.classList.remove("blurred");
+              else cell.classList.add("blurred");
+            });
+            event.preventDefault();
+          }
+        });
+
+        // Buttons (if present)
+        const blurAllBtn = document.getElementById("blurAll");
+        const unblurAllBtn = document.getElementById("unblurAll");
+        if (blurAllBtn) {
+          blurAllBtn.addEventListener("click", () => {
+            document
+              .querySelectorAll(
+                "table td:not(:first-child), .blur-section .blur-target",
+              )
+              .forEach((el) => el.classList.add("blurred"));
+          });
+        }
+        if (unblurAllBtn) {
+          unblurAllBtn.addEventListener("click", () => {
+            document
+              .querySelectorAll(
+                "table td:not(:first-child), .blur-section .blur-target",
+              )
+              .forEach((el) => el.classList.remove("blurred"));
+          });
+        }
+      });
+
+      // === CUSTOM HEADER ELEMENT (unchanged) ===
+      class MyHeader extends HTMLElement {
+        connectedCallback() {
+          const text = this.innerHTML.trim() || "Section Title";
+
+          this.innerHTML = `
+        <div
+          style="
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            --tooltip-img-width: 400px;
+          "
+        >
+          ${text}
+        </div>
+        <br />
+      `;
+        }
+      }
+      customElements.define("my-header", MyHeader);
+
+      // === PASSWORD CHECK (unchanged) ===
+      function checkPassword() {
+        const enteredPassword = document.getElementById("password").value;
+        const correctPassword = "";
+        if (enteredPassword === correctPassword) {
+          document.getElementById("content").style.display = "block";
+          document.querySelector("h2").style.display = "none";
+          document.querySelector("p").style.display = "none";
+          document.getElementById("password").style.display = "none";
+          event.target.style.display = "none";
+        } else {
+          alert("Incorrect password. Please try again.");
+        }
+      }
+
+      // === SHUFFLE LOGIC (per-table inside details blocks) ===
+      function shuffleRowsInTable(table) {
+        const tbody = table.querySelector("tbody");
+        if (!tbody) return;
+
+        const rows = Array.from(tbody.querySelectorAll("tr"));
+        if (rows.length <= 1) return;
+
+        // Detach all rows
+        rows.forEach((row) => tbody.removeChild(row));
+
+        // Fisher-Yates shuffle
+        for (let i = rows.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [rows[i], rows[j]] = [rows[j], rows[i]];
+        }
+
+        // Re-attach in new order
+        for (const row of rows) tbody.appendChild(row);
+      }
+
+      /* Capture the original order of rows for all tables inside details blocks (on page load) */
+      function captureOriginalOrder() {
+        const data = new Map();
+        document.querySelectorAll("details table").forEach((tbl) => {
+          const tbody = tbl.querySelector("tbody");
+          if (!tbody) return;
+          const order = Array.from(tbody.querySelectorAll("tr")).map((tr) =>
+            tr.cloneNode(true),
+          );
+          data.set(tbl, order);
+        });
+        return data;
+      }
+
+      /* Restore original order for all tables inside details blocks */
+      function resetTablesToOriginal(orderMap) {
+        orderMap.forEach((originalRows, tbl) => {
+          const tbody = tbl.querySelector("tbody");
+          if (!tbody) return;
+          // Remove current rows
+          const current = Array.from(tbody.querySelectorAll("tr"));
+          current.forEach((row) => tbody.removeChild(row));
+
+          // Append copies in original order
+          originalRows.forEach((row) => tbody.appendChild(row.cloneNode(true)));
+        });
+      }
+
+      /* Shuffle every table inside every details block independently */
+      function shuffleAllTablesInDetails() {
+        const detailsBlocks = document.querySelectorAll("details");
+        detailsBlocks.forEach((det) => {
+          det.querySelectorAll("table").forEach((tbl) => {
+            shuffleRowsInTable(tbl);
+          });
+        });
+      }
+
+      /* Wire up UI and keyboard shortcuts (Z to shuffle, X to reset) */
+      document.addEventListener("DOMContentLoaded", () => {
+        // Prepare original order snapshot
+        const originalOrder = captureOriginalOrder();
+
+        // Button handlers
+        const btnShuffle = document.getElementById("shuffleAllTables");
+        if (btnShuffle) {
+          btnShuffle.addEventListener("click", () => {
+            shuffleAllTablesInDetails();
+          });
+        }
+
+        const btnReset = document.getElementById("resetTables");
+        if (btnReset) {
+          btnReset.addEventListener("click", () => {
+            resetTablesToOriginal(originalOrder);
+          });
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener("keydown", (event) => {
+          const key = event.key.toLowerCase();
+          if (key === "z") {
+            shuffleAllTablesInDetails();
+            event.preventDefault();
+          } else if (key === "x") {
+            resetTablesToOriginal(originalOrder);
+            event.preventDefault();
+          }
+        });
+      });
+    </script>
+  </body>
+</html>
